@@ -1,10 +1,11 @@
+var curSelection;
+
 $(function() {
     var lib = Library();
     $('.menu .item').tab();
     var page = 1;
     var maxResults = 10;
     var track;
-    var curSelection;
     $('.search-options').dropdown();
     var color = function() {
         var i = 0

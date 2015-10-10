@@ -2,6 +2,7 @@ var centerX;
 var centerY;
 var radius;
 var planet;
+var heldPlanet;
 
 function setup() {
   // uncomment this line to make the canvas the full size of the window
@@ -33,8 +34,6 @@ function setup() {
             planets[2].setTrack(track3);
             planets[2].start();
         });
-
-    var heldPlanet = null;
 }
 
 function addPlanet(p) {
@@ -64,6 +63,7 @@ function draw() {
 }
 
 function mousePressed() {
+  console.log(curSelection);
     for (var i = 0; i < planets.length; i++) {
         if (planets[i].contains(mouseX, mouseY)) {
             planets[i].clicked();
