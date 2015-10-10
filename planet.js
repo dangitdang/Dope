@@ -92,16 +92,23 @@ var Orbit = function(centerX, centerY, width) {
     var threshold = 10;
     var fillColor = color(255, 255, 255);
     var width = width;
+    var hoveringNear = false;
 
     that.draw = function() {
         noFill();
         ellipse(centerX, centerY, width, width);
-        that.drawLines();
+
+        if (hoveringNear)
+            that.drawLines();
     }
 
     that.isNear = function(x, y) {
         var dist = sqrt(pow(x - centerX, 2) + pow(y - centerY,2));
         return abs(dist - width/2.0) < threshold;
+    }
+
+    that.setHover = function(h) {
+        hoveringNear = h;
     }
 
     that.getRadius = function() {

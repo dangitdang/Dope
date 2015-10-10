@@ -13,7 +13,10 @@ function setup() {
     orbits = [Orbit(centerX, centerY, 250), Orbit(centerX, centerY, 500)];
     planets = [Planet(centerX, centerY, 125, .002, 0),
               Planet(centerX, centerY, 250, .002, 0),
-              Planet(centerX, centerY, 250, .002, 0)];
+              Planet(centerX, centerY, 250, .002, Math.PI/4)];
+
+    //for (var x = 0; x < 2; x++)
+    //  addPlanet("https://d34x6xks9kc6p2.cloudfront.net/b9af100a-5da2-4841-a6ea-f5408a207660/b9af100a-5da2-4841-a6ea-f5408a207660.mp3");
 
     track = Track(100, {path:'https://d34x6xks9kc6p2.cloudfront.net/5791ecac-505b-4e53-901c-eab2e2b3f5a6/5791ecac-505b-4e53-901c-eab2e2b3f5a6.mp3'},
         function() {
@@ -30,7 +33,6 @@ function setup() {
             planets[2].setTrack(track3);
             planets[2].start();
         });
-
 
     var heldPlanet = null;
 }
@@ -93,10 +95,12 @@ function mouseReleased() {
 
 function mouseDragged() {
   heldPlanet.dragged();
-  for (var i = 0; i < orbits.length; i++) {
-    if (orbits[i].isNear(mouseX, mouseY)) {
-    }
-  }
+  orbits.forEach(function(orbit) {
+    if (heldPlanet && orbit.isNear(mouseX, mouseY))
+      orbit.setHover(true);
+    else
+      orbit.setHover(false);
+  })
 }
 
 function mouseMoved() {
