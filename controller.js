@@ -75,9 +75,15 @@ $(function() {
                 'data-path': sample.path,
                 'data-color': trackColor
             });
-            item.html("<div class='right floated content'> <button class='red small ui button'>remove</button> </div> <div class='left floated content'> <div class='ui " + trackColor + " empty massive circular label'></div> </div> <div class='content'> <div class='header'>" + sample.name + " </div> " + sample.artist + " </div>");
+            item.html("<div class='right floated content'> <button class='red small ui button remove-sample'>remove</button> </div> <div class='left floated content'> <div class='ui " + trackColor + " empty massive circular label'></div> </div> <div class='content'> <div class='header'>" + sample.name + " </div> " + sample.artist + " </div>");
             $('.library').append(item);
             bindSelection();
+            $('.remove-sample').click(function(evt){
+                console.log('hello');
+                evt.stopPropagation();
+                var item = $(this).parents('.item');
+                item.remove();
+            });
         });
     }
     var bindSelection = function() {
