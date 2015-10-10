@@ -2,10 +2,10 @@ var Track = function(tempo, sample, init_cb){
 	var that = Object.create(Track.prototype),
 		soundLoaded = false,
 		sample = sample,
-		sound = new p5.SoundFile(sample.path, trackLoaded);
+		sound = new p5.SoundFile(sample.path, function(){trackLoaded()});
 
 	var trackLoaded = function(cb){
-		var callback = cb ? cb : init_cb; 
+		var callback = cb ? cb : init_cb;
 		soundLoaded = true;
 		callback();
 	};
