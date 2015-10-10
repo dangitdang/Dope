@@ -24,6 +24,9 @@ var Track = function(tempo, sample, init_cb){
 		sample = new_sample;
 		sound.setPath(sample.path, trackLoaded(callback));
 	};
+	that.isPlaying = function(){
+		return sound.isPlaying();
+	}
 
 	Object.freeze(that);
 	return that;
