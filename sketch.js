@@ -13,16 +13,16 @@ function setup() {
     orbits = [Orbit(centerX, centerY, 250), Orbit(centerX, centerY, 500)];
     planets = [Planet(centerX, centerY, 125, .001, 0), Planet(centerX, centerY, 250, .002, Math.PI)];
 
-    track = Track(100, {path:'https://d34x6xks9kc6p2.cloudfront.net/85eac288-b659-4d8e-b2ba-67ad5def2458/85eac288-b659-4d8e-b2ba-67ad5def2458.mp3'},
-        function() {
-            planets[0].setTrack(track);
-            planets[0].start();
-        });
-    track2 = Track(100, {path:"https://d34x6xks9kc6p2.cloudfront.net/85eac288-b659-4d8e-b2ba-67ad5def2458/85eac288-b659-4d8e-b2ba-67ad5def2458.mp3"},
-        function() {
-            planets[1].setTrack(track2);
-            planets[1].start();
-        });
+    // track = Track(100, {path:'https://d34x6xks9kc6p2.cloudfront.net/85eac288-b659-4d8e-b2ba-67ad5def2458/85eac288-b659-4d8e-b2ba-67ad5def2458.mp3'},
+    //     function() {
+    //         planets[0].setTrack(track);
+    //         planets[0].start();
+    //     });
+    // track2 = Track(100, {path:"https://d34x6xks9kc6p2.cloudfront.net/85eac288-b659-4d8e-b2ba-67ad5def2458/85eac288-b659-4d8e-b2ba-67ad5def2458.mp3"},
+    //     function() {
+    //         planets[1].setTrack(track2);
+    //         planets[1].start();
+    //     });
 
 
 

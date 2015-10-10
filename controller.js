@@ -4,15 +4,29 @@ $(function() {
     var page = 1;
     var maxResults = 10;
     var track;
+    var curSelection;
     $('.search-options').dropdown();
-    var color = function(){
-        var i = 0 
-        var colors = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown'];
-        color = function(){
+    var color = function() {
+        var i = 0
+        var colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown'];
+        color = function() {
             i += 1;
             return colors[i];
         }
         return colors[i];
+    }
+    var colorsHex = {
+        'red': '#DD241E',
+        'orange': '#F47100',
+        'yellow': '#FDBE00',
+        'olive': '#B5CE00',
+        'green': '#0DBC3D',
+        'teal': '#00AFA8',
+        'blue': '#1683D3',
+        'violet': '#642CCC',
+        'purple': '#A428CB',
+        'pink': '#E23398',
+        'brown': '#A6673B'
     }
     var getResults = function(filter, query, index, callback) {
         var url = 'http://hackathon.indabamusic.com/samples?' + filter + '=' + query + '&page=' + index + '&per_page=' + maxResults;
@@ -24,7 +38,7 @@ $(function() {
     var bindPlay = function() {
         $('.play-sample').click(function() {
             console.log('hello');
-            var link = 'https://d34x6xks9kc6p2.cloudfront.net/'+$(this).attr('data-mp3');
+            var link = 'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-mp3');
             console.log(link);
             if (!track) {
                 track = Track(1, {
@@ -36,7 +50,7 @@ $(function() {
                 track.changeSample({
                     path: link
                 }, function() {
-                    if (track.isPlaying()){
+                    if (track.isPlaying()) {
                         track.stop();
                     }
                     track.play();
@@ -44,25 +58,43 @@ $(function() {
             }
         });
     }
-    var bindAddToLibrary = function(){
-        $('.add-library').click(function(evt){
+    var bindAddToLibrary = function() {
+        $('.add-library').click(function(evt) {
             console.log('hello');
             var item = $(this).parents('.item');
             var sample = {
                 name: item.attr('data-name'),
-                artist : item.attr('data-artist'),
+                artist: item.attr('data-artist'),
                 path: item.attr('data-path'),
                 inUse: false
             }
             lib.addSample(sample);
             var item = $('<div>').addClass('item');
-            item.html("<div class='right floated content'> <button class='red small ui button'>remove</button> </div> <div class='left floated content'> <div class='ui "+color()+" empty massive circular label'></div> </div> <div class='content'> <div class='header'>"+ sample.name+" </div> "+sample.artist+" </div>");
+            var trackColor = color();
+            item.attr({
+                'data-path': sample.path,
+                'data-color': trackColor
+            });
+            item.html("<div class='right floated content'> <button class='red small ui button'>remove</button> </div> <div class='left floated content'> <div class='ui " + trackColor + " empty massive circular label'></div> </div> <div class='content'> <div class='header'>" + sample.name + " </div> " + sample.artist + " </div>");
             $('.library').append(item);
+            bindSelection();
         });
-
-
     }
-    var displayResult = function(data){
+    var bindSelection = function() {
+        $('.library .item').click(function(evt) {
+            if ($(this).hasClass('selected')) {
+                curSelection = {};
+                $(this).removeClass('selected');
+            } else {
+                $(this).addClass('selected');
+                curSelection = {
+                    path: $(this).attr('data-path'),
+                    color: colorsHex[$(this).attr('data-color')];
+                }
+            }
+        });
+    }
+    var displayResult = function(data) {
         $('.results').html('');
         var items = $('<div>');
         items.addClass('ui list divided');
@@ -71,7 +103,7 @@ $(function() {
             var artist = i.artist;
             var s3_key = i.s3_key.slice(0, -3) + "mp3";
             var item = $('<div>').addClass('item').attr({
-                'data-name' : name,
+                'data-name': name,
                 'data-artist': artist,
                 'data-path': s3_key
             });
@@ -84,16 +116,16 @@ $(function() {
         bindPlay();
         bindAddToLibrary();
     }
-    var addPagingButtons = function(index){
+    var addPagingButtons = function(index) {
         $('.paging').html("<div class='ui buttons'><button class='ui button page-button' data-dir='prev'>Prev</button><button class='ui button page-button' data-dir='next'=>Next</button></div>");
-        $('.page-button').click(function(evt){
+        $('.page-button').click(function(evt) {
             var type = $(".search-options option:selected").val(),
                 query = $('.search-query').val();
             var dir = $(this).attr('data-dir');
             if (dir === 'prev') {
-                getResults(type,query, --page, displayResult);
+                getResults(type, query, --page, displayResult);
             } else {
-                getResults(type,query, ++page, displayResult);
+                getResults(type, query, ++page, displayResult);
             }
         });
     }
