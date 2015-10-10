@@ -89,7 +89,7 @@ $(function() {
                 $(this).addClass('selected');
                 curSelection = {
                     path: $(this).attr('data-path'),
-                    color: colorsHex[$(this).attr('data-color')];
+                    color: colorsHex[$(this).attr('data-color')]
                 }
             }
         });
