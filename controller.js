@@ -1,10 +1,10 @@
+var curSelection;
 $(function() {
     var lib = Library();
     $('.menu .item').tab();
     var page = 1;
     var maxResults = 10;
     var track;
-    var curSelection;
     $('.search-options').dropdown();
     var color = function() {
         var i = 0
@@ -88,7 +88,7 @@ $(function() {
             } else {
                 $(this).addClass('selected');
                 curSelection = {
-                    path: $(this).attr('data-path'),
+                    path:'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-path'),
                     color: colorsHex[$(this).attr('data-color')]
                 }
             }
