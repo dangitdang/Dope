@@ -1,0 +1,12 @@
+body {
+	position: relative;
+}
+.controls {
+	position: absolute;
+	top: 2%;
+	right: 5%;
+	width: 500px;
+	height: 600px;
+
+}
+
