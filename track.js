@@ -27,6 +27,9 @@ var Track = function(tempo, sample, init_cb){
 	that.isPlaying = function(){
 		return sound.isPlaying();
 	}
+	that.stop = function(){
+		sound.stop();
+	}
 
 	Object.freeze(that);
 	return that;
