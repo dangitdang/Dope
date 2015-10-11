@@ -76,22 +76,22 @@ $(function() {
                 'data-path': sample.path,
                 'data-color': trackColor
             });
-            item.html("<div class='right floated content'> <button class='red small ui button'>remove</button> </div> <div class='left floated content'> <div class='ui " + trackColor + " empty massive circular label'></div> </div> <div class='content'> <div class='header'>" + sample.name + " </div> " + sample.artist + " </div>");
+            item.html("<div class='right floated content'> <button class='red small ui button remove-sample'>remove</button> </div> <div class='left floated content'> <div class='ui " + trackColor + " empty massive circular label'></div> </div> <div class='content'> <div class='header'>" + sample.name + " </div> " + sample.artist + " </div>");
             $('.library').append(item);
             bindSelection();
+            $('.remove-sample').click(function(evt){
+                console.log('hello');
+                evt.stopPropagation();
+                var item = $(this).parents('.item');
+                item.remove();
+            });
         });
     }
     var bindSelection = function() {
         $('.library .item').click(function(evt) {
-            if ($(this).hasClass('selected')) {
-                curSelection = {};
-                $(this).removeClass('selected');
-            } else {
-                $(this).addClass('selected');
-                curSelection = {
-                    path:'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-path'),
-                    color: colorsHex[$(this).attr('data-color')]
-                }
+            curSelection = {
+                path:'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-path'),
+                color: colorsHex[$(this).attr('data-color')]
             }
         });
     }
@@ -100,7 +100,7 @@ $(function() {
         var items = $('<div>');
         items.addClass('ui list divided');
         data.forEach(function(i) {
-            var name = i.song_name;
+            var name = i.name;
             var artist = i.artist;
             var s3_key = i.s3_key.slice(0, -3) + "mp3";
             var item = $('<div>').addClass('item').attr({
