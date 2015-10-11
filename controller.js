@@ -88,15 +88,9 @@ $(function() {
     }
     var bindSelection = function() {
         $('.library .item').click(function(evt) {
-            if ($(this).hasClass('selected')) {
-                curSelection = {};
-                $(this).removeClass('selected');
-            } else {
-                $(this).addClass('selected');
-                curSelection = {
-                    path:'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-path'),
-                    color: colorsHex[$(this).attr('data-color')]
-                }
+            curSelection = {
+                path:'https://d34x6xks9kc6p2.cloudfront.net/' + $(this).attr('data-path'),
+                color: colorsHex[$(this).attr('data-color')]
             }
         });
     }
