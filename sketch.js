@@ -3,17 +3,22 @@ var centerY;
 var radius;
 var planet;
 var heldPlanet;
+var circle;
+
+function preload() {
+  circle = loadImage("http://i.imgur.com/ftajGNG.png");
+}
 
 function setup() {
   // uncomment this line to make the canvas the full size of the window
    createCanvas(windowWidth, windowHeight);
    background(0, 0, 0);
    centerX = 350;
-   centerY = 400;
+   centerY = 350;
     radius = 150;
-
-    orbits = [Orbit(centerX, centerY, 250), Orbit(centerX, centerY, 500)];
+    orbits = [Orbit(centerX, centerY, 250), Orbit(centerX, centerY, 400), Orbit(centerX, centerY, 550)];
     planets = [];
+
 }
 
 function addPlanet(p) {
@@ -28,7 +33,9 @@ function addPlanet(p) {
 
 function draw() {
   clear();
-     background(0, 0, 0);
+  background(0, 0, 0);
+  //image(circle, 0, 0, 300, 300);
+
 
   var speed = 0.002;
 
@@ -65,11 +72,13 @@ function mousePressed() {
 
 function mouseReleased() {
     orbits.forEach(function(orbit){
+      orbit.setHover(false);
       if (heldPlanet && orbit.isNear(mouseX, mouseY)){
           // Get planet ready to orbit new radius
           heldPlanet.setRadius(orbit.getRadius());
           heldPlanet.setOrbiting(true);
           theta = orbit.getAngle(mouseX, mouseY);
+          heldPlanet.setSpeed(orbit.getSpeed());
 
           // What snap-theta is closest?
           var numTheta = Math.round(theta / (Math.PI / 4));
@@ -79,6 +88,7 @@ function mouseReleased() {
           heldPlanet = null;
         }
     })
+    heldPlanet = null;
 
 }
 

@@ -3,10 +3,11 @@ var Planet = function(centerX, centerY, radius, s, o) {
     var mainSpeed = s;
     var speed = 0;
     var offset = o;
-    var size = 80;
+    var size = 50;
     var currentX = 0;
     var currentY = 0;
-    var sprite = ellipse(centerX + radius, centerY + radius, size, size);
+    //var sprite = ellipse(centerX + radius, centerY + radius, size, size);
+    var sprite = image(circle, centerX + radius, centerY + radius);
     var fillColor = color(0, 0, 0);
     var curTrack;
     var lastX = 0;
@@ -23,13 +24,14 @@ var Planet = function(centerX, centerY, radius, s, o) {
         // Update sprite color & position
         //fillColor = color(0, 0, bAnim.eval());
         fill(fillColor);
-
+        tint(red(fillColor), green(fillColor), blue(fillColor));
         if (orbiting) {
             currentX = radius*cos(speed * (milli - dt) + offset) + centerX;
             currentY = radius*sin(speed * (milli - dt) + offset) + centerY;
         }
 
-        sprite = ellipse(currentX, currentY, size, size);
+        //sprite = ellipse(currentX, currentY, size, size);
+        sprite = image(circle, currentX - 100, currentY - 100, 200, 200);
 
         // Check if passed over top
         if ( lastX < centerX && currentX >= centerX && currentY < centerY
@@ -58,6 +60,10 @@ var Planet = function(centerX, centerY, radius, s, o) {
 
     that.setColor = function(c) {
         fillColor = color(c);
+    }
+
+    that.setSpeed = function(sp) {
+        speed = sp;
     }
 
     that.setLockedOffset = function(o) {
@@ -92,10 +98,12 @@ var Planet = function(centerX, centerY, radius, s, o) {
 
 var Orbit = function(centerX, centerY, width) {
     var that = Object.create(Orbit.prototype);
-    var threshold = 10;
+    var threshold = 20;
     var fillColor = color(255, 255, 255);
     var width = width;
     var hoveringNear = false;
+    var orbitSpeed = .002/((width - 100) / 150);
+
 
     that.draw = function() {
         noFill();
@@ -117,6 +125,10 @@ var Orbit = function(centerX, centerY, width) {
 
     that.getRadius = function() {
         return width/2.0;
+    }
+
+    that.getSpeed = function() {
+        return orbitSpeed;
     }
 
     that.getAngle = function(x, y) {

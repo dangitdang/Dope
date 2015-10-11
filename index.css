@@ -7,6 +7,10 @@ body {
 	right: 25px;
 	width: 450px;
 	height: 600px;
+}
 
+.results {
+    margin-top: 10px;
+    margin-bottom:10px;
 }
 
