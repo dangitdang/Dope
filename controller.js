@@ -99,7 +99,7 @@ $(function() {
         var items = $('<div>');
         items.addClass('ui list divided');
         data.forEach(function(i) {
-            var name = i.song_name;
+            var name = i.name;
             var artist = i.artist;
             var s3_key = i.s3_key.slice(0, -3) + "mp3";
             var item = $('<div>').addClass('item').attr({
