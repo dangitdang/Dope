@@ -102,7 +102,8 @@ var Orbit = function(centerX, centerY, width) {
     var fillColor = color(255, 255, 255);
     var width = width;
     var hoveringNear = false;
-    var orbitSpeed = .002/((width - 100) / 150);
+    var spd = (width - 100) / 150
+    var orbitSpeed = .006/pow(2, spd);
 
 
     that.draw = function() {
