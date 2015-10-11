@@ -7,33 +7,13 @@ var heldPlanet;
 function setup() {
   // uncomment this line to make the canvas the full size of the window
    createCanvas(windowWidth, windowHeight);
+   background(0, 0, 0);
    centerX = 350;
    centerY = 400;
     radius = 150;
 
     orbits = [Orbit(centerX, centerY, 250), Orbit(centerX, centerY, 500)];
-    planets = [Planet(centerX, centerY, 125, .002, 0),
-              Planet(centerX, centerY, 250, .002, 0),
-              Planet(centerX, centerY, 250, .002, Math.PI/4)];
-
-    //for (var x = 0; x < 2; x++)
-    //  addPlanet("https://d34x6xks9kc6p2.cloudfront.net/b9af100a-5da2-4841-a6ea-f5408a207660/b9af100a-5da2-4841-a6ea-f5408a207660.mp3");
-
-    track = Track(100, {path:'https://d34x6xks9kc6p2.cloudfront.net/5791ecac-505b-4e53-901c-eab2e2b3f5a6/5791ecac-505b-4e53-901c-eab2e2b3f5a6.mp3'},
-        function() {
-            planets[0].setTrack(track);
-            planets[0].start();
-        });
-    track2 = Track(100, {path:"https://d34x6xks9kc6p2.cloudfront.net/b9af100a-5da2-4841-a6ea-f5408a207660/b9af100a-5da2-4841-a6ea-f5408a207660.mp3"},
-        function() {
-            planets[1].setTrack(track2);
-            planets[1].start();
-        });
-    track3 = Track(100, {path:"https://d34x6xks9kc6p2.cloudfront.net/b9af100a-5da2-4841-a6ea-f5408a207660/b9af100a-5da2-4841-a6ea-f5408a207660.mp3"},
-        function() {
-            planets[2].setTrack(track3);
-            planets[2].start();
-        });
+    planets = [];
 }
 
 function addPlanet(p) {
@@ -48,6 +28,8 @@ function addPlanet(p) {
 
 function draw() {
   clear();
+     background(0, 0, 0);
+
   var speed = 0.002;
 
   noFill();
@@ -63,13 +45,22 @@ function draw() {
 }
 
 function mousePressed() {
-  console.log(curSelection);
-    for (var i = 0; i < planets.length; i++) {
-        if (planets[i].contains(mouseX, mouseY)) {
-            planets[i].clicked();
-            heldPlanet = planets[i];
-        }
+  if (mouseX < windowWidth - 475) {
+    console.log(curSelection);
+      for (var i = 0; i < planets.length; i++) {
+          if (planets[i].contains(mouseX, mouseY)) {
+              planets[i].clicked();
+              heldPlanet = planets[i];
+          }
+      }
+    if (!heldPlanet) {
+      addPlanet(curSelection.path);
+      p = planets[planets.length - 1];
+      p.setOrbiting(false);
+      p.setColor(curSelection.color);
+      p.dragged();
     }
+  }
 }
 
 function mouseReleased() {
@@ -82,8 +73,6 @@ function mouseReleased() {
 
           // What snap-theta is closest?
           var numTheta = Math.round(theta / (Math.PI / 4));
-          console.log(numTheta);
-          console.log(theta);
 
           //heldPlanet.setOffset(theta);
           heldPlanet.setLockedOffset(numTheta);
@@ -94,7 +83,8 @@ function mouseReleased() {
 }
 
 function mouseDragged() {
-  heldPlanet.dragged();
+  if (heldPlanet)
+    heldPlanet.dragged();
   orbits.forEach(function(orbit) {
     if (heldPlanet && orbit.isNear(mouseX, mouseY))
       orbit.setHover(true);

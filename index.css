@@ -4,8 +4,8 @@ body {
 .controls {
 	position: absolute;
 	top: 2%;
-	right: 5%;
-	width: 500px;
+	right: 25px;
+	width: 450px;
 	height: 600px;
 
 }

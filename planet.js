@@ -13,6 +13,7 @@ var Planet = function(centerX, centerY, radius, s, o) {
     var bAnim = Animation(0, 0, 1);
     var orbiting = true;
     var dt = 0;
+    var colorStr = "#0"
     radius = radius;
 
     that.update = function() {
@@ -20,7 +21,7 @@ var Planet = function(centerX, centerY, radius, s, o) {
         lastX = currentX;
 
         // Update sprite color & position
-        fillColor = color(0, 0, bAnim.eval());
+        //fillColor = color(0, 0, bAnim.eval());
         fill(fillColor);
 
         if (orbiting) {
@@ -55,6 +56,10 @@ var Planet = function(centerX, centerY, radius, s, o) {
         offset = o + Math.PI;
     }
 
+    that.setColor = function(c) {
+        fillColor = color(c);
+    }
+
     that.setLockedOffset = function(o) {
         offset = o * Math.PI/4 + Math.PI;
     }
@@ -64,8 +69,6 @@ var Planet = function(centerX, centerY, radius, s, o) {
     }
 
     that.clicked = function() {
-        bAnim = Animation(255, 0, 1000);
-        fillColor = color(0, 0, 255);
         orbiting = false;
     }
 
@@ -96,6 +99,7 @@ var Orbit = function(centerX, centerY, width) {
 
     that.draw = function() {
         noFill();
+        stroke(fillColor);
         ellipse(centerX, centerY, width, width);
 
         if (hoveringNear)
